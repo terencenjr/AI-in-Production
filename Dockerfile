@@ -1,10 +1,13 @@
-FROM python:3.9
+FROM python:3.9-slim
+
+# Install gcc and g++ for CMAKE
+RUN apt-get update && apt-get install build-essential -y
 
 WORKDIR /app
 
 COPY ./requirements.txt /app/requirements.txt
 
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install -r requirements.txt
 
 COPY ./app /app
 

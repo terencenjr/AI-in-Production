@@ -1,4 +1,4 @@
 uvicorn
 fastapi
-transformers
-optimum
+llama-cpp-python
+
