@@ -1,12 +1,19 @@
 from tiny_llama import respond
+from request import Request
 from fastapi import FastAPI
+import re
 
 app = FastAPI()
 
 @app.get("/")
 async def root():
-    return {"message": respond("What is AI?")}
+    return "Welcome to Llama Chat!"
 
-@app.get("/health")
-async def health():
-    return "200 OK"
+@app.post("/chat")
+async def chat(request: Request):
+    print(f"Prompt received: {request.prompt}")
+    response = respond(request.prompt)
+    return {"message": prettify(response)} 
+
+def prettify(response: str):
+    return re.sub("(\[\/INST]|\[\/SYS]|\\n)", "", response) # Remove all the tags and newlines
